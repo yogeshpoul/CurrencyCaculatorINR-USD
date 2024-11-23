@@ -11,9 +11,19 @@ public class CurrencyController {
     @Autowired
     private CurrencyConversionService currencyConversionService;
 
-    // Endpoint to convert INR to USD
-    @GetMapping("/convert-inr-to-usd")
-    public double convertINRtoUSD(@RequestParam double amount) {
-        return currencyConversionService.convertINRtoUSD(amount);
+    /**
+     * Endpoint to convert between any two currencies.
+     *
+     * @param fromCurrency the source currency (e.g., "USD")
+     * @param toCurrency   the target currency (e.g., "EUR")
+     * @param amount       the amount to convert
+     * @return the converted amount
+     */
+    @GetMapping("/convert")
+    public double convertCurrency(
+            @RequestParam String fromCurrency,
+            @RequestParam String toCurrency,
+            @RequestParam double amount) {
+        return currencyConversionService.convertCurrency(fromCurrency, toCurrency, amount);
     }
 }
