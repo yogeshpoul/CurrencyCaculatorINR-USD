@@ -9,7 +9,7 @@ import { BottomWarning } from "../components/BottomWarning"
 import { API_URL } from "../config"
 
 export const Signup = () => {
-    const [name, setName] = useState("");
+    const [fullName, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -20,19 +20,18 @@ export const Signup = () => {
         setLoading(true);
         try {
             console.log("api URL",API_URL)
-            const response = await axios.post(`${API_URL}/api/v1/signup`, {
-                name,
+            const response = await axios.post(`${API_URL}/auth/signup`, {
+                fullName,
                 email,
                 password
             });
 
             console.log("response",response);
-            if (response.data.message === "User created successfully") {
-                navigate("/dashboard");
+            if (response.status === 200) {
+                navigate("/");
             } else {
                 alert("Enter Correct details!");
             }
-            localStorage.setItem("token", "Bearer "+response.data.token);
         } catch (error) {
             alert("Error occurred during sign up. Please try again.");
         } finally {
